@@ -8,9 +8,9 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
 
-public class MyTurboFilter extends TurboFilter {
+public class CRLFTurboFilter extends TurboFilter {
 
-    public static final String MARKER = "REPLACE_MARKER";
+    private static final String MARKER = "REPLACE_MARKER";
 
     @Override
     public FilterReply decide(Marker marker, Logger logger, Level level, String s, Object[] objects, Throwable throwable) {
