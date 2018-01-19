@@ -18,15 +18,27 @@ public class CRLFTurboFilter extends TurboFilter {
         if (marker != null && marker.equals (MarkerFactory.getMarker (MARKER))) {
             return FilterReply.ACCEPT;
         }
+
+        boolean containRN = false;
+
         if ((objects != null && objects.length > 0)) {
             for (int i = 0; i < objects.length; i++) {
-                objects[i] = objects[i].toString ().replaceAll ("[\r\n]", "");
+                String o = objects[i].toString ();
+                if (o.contains ("\r") || o.contains ("\n")) {
+                    objects[i] = o.replaceAll ("[\r\n]", "");
+                    containRN = true;
+                }
             }
         }
         if (s != null && (s.contains ("\r") || s.contains ("\n"))) {
             logger.log (MarkerFactory.getMarker (MARKER), "", level.toInt () / 1000, s.replaceAll ("[\r\n]", ""), objects, throwable);
+            containRN = true;
+        }
+
+        if (containRN) {
             return FilterReply.DENY;
         }
+
         return FilterReply.NEUTRAL;
     }
 }
